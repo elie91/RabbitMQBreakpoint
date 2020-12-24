@@ -1,0 +1,47 @@
+version: "3.6"
+services:
+  api-one:
+    build: "api-one"
+    working_dir: "/app"
+    volumes:
+      - /app/node_modules
+      - "./api-one:/app:rw,consistent"
+    ports:
+      - 4001:3001
+    depends_on:
+      - db-api-one
+
+  api-two:
+    build: "api-two"
+    working_dir: "/app"
+    volumes:
+      - /app/node_modules
+      - "./api-two:/app:rw,consistent"
+    ports:
+      - 4002:3002
+    depends_on:
+      - db-api-two
+
+  db-api-one:
+    image: "postgres:12-alpine"
+    volumes:
+      - "./api-one/docker/postgres/data:/var/lib/postgres/data"
+    ports:
+      - 7080:5432
+    environment:
+      - PGDATA=/var/lib/postgres/data/pgdata
+      - POSTGRES_DB=apiOne
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  db-api-two:
+    image: "postgres:12-alpine"
+    volumes:
+      - "./api-two/docker/postgres/data:/var/lib/postgres/data"
+    ports:
+      - 7081:5432
+    environment:
+      - PGDATA=/var/lib/postgres/data/pgdata
+      - POSTGRES_DB=apiTwo
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

@@ -1,8 +1,7 @@
 FROM node:alpine
-WORKDIR /app
+WORKDIR /home/node/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ARG REACT_APP_API_ENTRYPOINT
-EXPOSE 3001
+EXPOSE 3000
 CMD ["npm", "start"]

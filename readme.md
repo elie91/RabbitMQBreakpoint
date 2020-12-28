@@ -4,6 +4,9 @@
 ### Le projet est composé de deux API Nodejs Express, avec deux bases de données PostgresSQL
 
 ### Lancer le projet:
+* cd api-one
+* docker-compose up --build
+* cd ../api-two
 * docker-compose up --build
 
 

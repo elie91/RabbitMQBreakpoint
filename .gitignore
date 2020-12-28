@@ -1,4 +1,5 @@
-api-one/node_modules
-api-two/node_modules
-api-one/docker
-api-two/docker
+api-sequelize/node_modules
+api-mongo/node_modules
+api-sequelize/docker
+api-mongo/docker
+.idea

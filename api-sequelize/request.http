@@ -1,0 +1,16 @@
+### create User
+
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "firstname": "elie",
+    "lastname": "bismuth",
+    "email": "test@gmail.com",
+    "phone": "0777777777"
+}
+
+### get Users
+
+GET http://localhost:3001/users
+Content-Type: application/json

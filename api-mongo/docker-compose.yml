@@ -27,7 +27,6 @@ services:
       - mongo
     depends_on:
       - mongo
-    restart: always
     ports:
       - "3000:3000"
 

@@ -7,6 +7,7 @@ const userRoutes = require('./routes/user');
 app.use(express.json());
 app.use(userRoutes);
 
+
 const test = async () => {
     try {
         await sequelize.authenticate();

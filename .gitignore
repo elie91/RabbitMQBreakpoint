@@ -1,6 +1,6 @@
 api-sequelize/node_modules
 api-mongo/node_modules
-api-sequelize/docker
+api-sequelize/.data
 api-mongo/docker
 .idea
 .docker

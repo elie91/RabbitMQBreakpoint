@@ -3,3 +3,4 @@ api-mongo/node_modules
 api-sequelize/docker
 api-mongo/docker
 .idea
+.docker

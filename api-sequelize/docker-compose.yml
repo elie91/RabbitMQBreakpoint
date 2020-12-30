@@ -4,11 +4,10 @@ services:
   postgres:
     image: 'postgres:12-alpine'
     volumes:
-      - ./docker/postgres/data:/var/lib/postgres/data
+      - apisequelize-db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
-      - PGDATA=/var/lib/postgres/data/pgdata
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=elie1996
@@ -19,11 +18,14 @@ services:
       - './:/home/node/app:rw,consistent'
     working_dir: '/home/node/app'
     command: 'npm start'
-    links:
-      - postgres
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: elie1996
+      DB_HOST: postgres
     depends_on:
       - postgres
     ports:
       - "3001:3001"
 
-
+volumes:
+  apisequelize-db:

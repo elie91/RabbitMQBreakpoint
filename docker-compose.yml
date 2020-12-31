@@ -11,45 +11,52 @@ services:
       - ./Producer:/usr/local/platform/Producer
       - ./Consumer:/usr/local/platform/Consumer
     working_dir: /usr/local/platform
+    networks:
+      - app-network
 
   producer:
     build: producer
-    working_dir: '/home/node/app'
+    working_dir: '/usr/src/app'
     volumes:
-      - '/home/node/app/node_modules'
-      - './producer:/home/node/app:rw,consistent'
+      - './producer:/usr/src/app'
     environment:
       MONGODB_USER: "mongo"
       MONGODB_PASS: "9tPf5DmJxBPy"
       MONGODB_DBNAME: "Producer"
-    links:
-      - mongo
+      RABBITMQ_URL: "amqp://rabbitmq"
     depends_on:
       - mongo
+    links:
+      - mongo
+      - rabbitmq
+    networks:
+      - app-network
     ports:
       - "3000:3000"
 
   consumer:
     build: consumer
-    working_dir: '/home/node/app'
+    working_dir: '/usr/src/app'
     volumes:
-      - '/home/node/app/node_modules'
-      - './consumer:/home/node/app:rw,consistent'
+      - './consumer:/usr/src/app'
     environment:
       MONGODB_USER: "mongo"
       MONGODB_PASS: "9tPf5DmJxBPy"
       MONGODB_DBNAME: "Consumer"
-    links:
-      - mongo
+      RABBITMQ_URL: "amqp://rabbitmq"
     depends_on:
       - mongo
+    links:
+      - mongo
+      - rabbitmq
+    networks:
+      - app-network
     ports:
       - "3001:3001"
 
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
     container_name: "rabbitmq"
-    hostname: "rabbitmq1"
     volumes:
       - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
       - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
@@ -57,3 +64,10 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge

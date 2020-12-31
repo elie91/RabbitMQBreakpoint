@@ -1,7 +1,5 @@
 FROM node:alpine
-WORKDIR /home/node/app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 3001
-CMD ["npm", "start"]
+WORKDIR /usr/src/app
+VOLUME [ "/usr/src/app" ]
+RUN npm install -g nodemon
+CMD [ "nodemon", "-L", "index.js" ]

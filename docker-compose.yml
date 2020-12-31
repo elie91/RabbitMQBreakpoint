@@ -1,7 +1,54 @@
 services:
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: 9tPf5DmJxBPy
+    volumes:
+      - ./Producer:/usr/local/platform/Producer
+      - ./Consumer:/usr/local/platform/Consumer
+    working_dir: /usr/local/platform
+
+  producer:
+    build: producer
+    working_dir: '/home/node/app'
+    volumes:
+      - '/home/node/app/node_modules'
+      - './producer:/home/node/app:rw,consistent'
+    environment:
+      MONGODB_USER: "mongo"
+      MONGODB_PASS: "9tPf5DmJxBPy"
+      MONGODB_DBNAME: "Producer"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+
+  consumer:
+    build: consumer
+    working_dir: '/home/node/app'
+    volumes:
+      - '/home/node/app/node_modules'
+      - './consumer:/home/node/app:rw,consistent'
+    environment:
+      MONGODB_USER: "mongo"
+      MONGODB_PASS: "9tPf5DmJxBPy"
+      MONGODB_DBNAME: "Consumer"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    ports:
+      - "3001:3001"
+
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
-    container_name: "rabbitmq_test"
+    container_name: "rabbitmq"
     hostname: "rabbitmq1"
     volumes:
       - ./.docker/rabbitmq/etc/:/etc/rabbitmq/

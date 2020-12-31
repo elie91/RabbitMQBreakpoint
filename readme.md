@@ -4,9 +4,6 @@
 ### Le projet est composé de deux API Nodejs Express, avec deux bases de données PostgresSQL
 
 ### Lancer le projet:
-* cd api-mongo
-* docker-compose up --build
-* cd ../api-sequelize
 * docker-compose up --build
 
 

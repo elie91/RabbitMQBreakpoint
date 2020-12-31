@@ -1,6 +1,6 @@
-api-sequelize/node_modules
-api-mongo/node_modules
-api-sequelize/.data
-api-mongo/docker
+consumer/node_modules
+producer/node_modules
+consumer/.data
+./Mongo
 .idea
 .docker

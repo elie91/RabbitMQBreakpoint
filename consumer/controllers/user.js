@@ -12,5 +12,4 @@ exports.createUser = (req, res, next) => {
     user.save()
         .then(() => res.status(201).send(user))
         .catch(err => console.log(err))
-
 };

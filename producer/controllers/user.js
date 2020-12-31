@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const sendMessage = require('../rabbitmq');
+const producer = require('../producer');
 
 
 exports.getUsers = (req, res, next) => {
@@ -9,12 +9,14 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.createUser = (req, res, next) => {
-    const { firstname, lastname, email, phone } = req.body;
-    const user = new User({ firstname, lastname, email, phone });
+    const {firstname, lastname, email, phone} = req.body;
+    const user = new User({firstname, lastname, email, phone});
     user.save()
         .then(() => {
-            sendMessage("this is a test")
-            res.status(201).send(user)
+            producer.send(user)
+                .then(() => res.status(201).send(user))
+                .catch(err => console.error(err))
+
         })
         .catch(err => console.log(err))
 

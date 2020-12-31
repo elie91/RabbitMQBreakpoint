@@ -26,6 +26,7 @@ services:
       RABBITMQ_URL: "amqp://rabbitmq"
     depends_on:
       - mongo
+      - rabbitmq
     links:
       - mongo
       - rabbitmq
@@ -46,6 +47,7 @@ services:
       RABBITMQ_URL: "amqp://rabbitmq"
     depends_on:
       - mongo
+      - rabbitmq
     links:
       - mongo
       - rabbitmq
